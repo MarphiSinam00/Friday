@@ -1,0 +1,15 @@
+ollama
+sqlalchemy
+python-dotenv
+colorama
+httpx
+anthropic
+PyQt6
+faster-whisper
+sounddevice
+numpy
+scipy
+pykokoro
+soundfile
+pvporcupine
+pyttsx3
