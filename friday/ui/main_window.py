@@ -239,6 +239,7 @@ class MainWindow(QMainWindow):
                    f"How may I assist you today?")
             self.chat.add_message(msg, is_friday=True, was_online=online)
             QTimer.singleShot(500, lambda: self._speak(msg))
+            QTimer.singleShot(3000, self._auto_listen)
         except Exception as e:
             print(f"[Friday] Welcome error: {e}")
 
@@ -263,8 +264,14 @@ class MainWindow(QMainWindow):
         self.status_bar.set_status("Ready")
         if text:
             self._process_input(text)
+            QTimer.singleShot(2000, self._auto_listen)
         else:
-            self.status_bar.set_status("Didn't catch that")
+            self.status_bar.set_status("Didn't catch that — listening again...")
+            QTimer.singleShot(500, self._auto_listen)
+
+    def _auto_listen(self):
+        if self.isVisible() and self.mic_btn.isEnabled():
+            self._on_mic_clicked()
 
     def _on_wake_word_ui(self):
         self.show()

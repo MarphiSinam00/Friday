@@ -131,16 +131,18 @@ def run_command(command: str) -> str:
 
 
 def take_screenshot() -> str:
-    """Take a screenshot and save it. Returns file path."""
     try:
         import PIL.ImageGrab as ImageGrab
         from datetime import datetime
-        screenshots_dir = Path.home() / "Pictures" / "Friday_Screenshots"
+        import os
+        desktop = Path(os.path.join(os.environ["USERPROFILE"], "Desktop"))
+        screenshots_dir = desktop / "Friday_Screenshots"
         screenshots_dir.mkdir(parents=True, exist_ok=True)
         filename = f"friday_{datetime.now().strftime('%Y%m%d_%H%M%S')}.png"
         filepath = screenshots_dir / filename
         img = ImageGrab.grab()
         img.save(str(filepath))
+        print(f"[Friday] Screenshot saved: {filepath}")
         return str(filepath)
     except Exception as e:
         print(f"[Friday] Screenshot failed: {e}")
